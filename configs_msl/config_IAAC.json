@@ -1,0 +1,78 @@
+{
+  "data_config": {
+    "data_name": "iaac",
+    "train_dataset_path": "/MMLRec/data/iaac_train.csv",
+    "test_dataset_path": "/MMLRec/data/iaac_test.csv",
+    "test_result_path": "/MMLRec/results/iaac_test_result.csv",
+    "layer_output_path": "/MMLRec/results/iaac_layer_output_msl/",
+    "all_columns": ["item_category_list", "item_property_list",
+       "item_brand_id", "item_city_id", "item_price_level", "item_sales_level",
+       "item_collected_level", "item_pv_level", "user_gender_id",
+       "user_age_level", "user_occupation_id", "user_star_level", "context_id",
+       "context_timestamp", "context_page_id", "predict_category_property",
+       "shop_id", "shop_review_num_level","shop_star_level", "shop_review_positive_rate", 
+       "shop_score_service", "shop_score_delivery", "shop_score_description", "is_trade"],
+    "feature_columns": ["item_category_list", "item_property_list",
+       "item_brand_id", "item_city_id", "item_price_level", "item_sales_level",
+       "item_collected_level", "item_pv_level", 
+       "user_age_level", "user_occupation_id", "user_star_level", "context_id",
+       "context_timestamp", "context_page_id", "predict_category_property",
+       "shop_id", "shop_review_num_level","shop_star_level"],
+    "dense_columns": ["shop_review_positive_rate", "shop_score_service", "shop_score_delivery", "shop_score_description"],
+    "ignore_columns": [],
+    "label_columns": ["is_trade", "is_trade", "is_trade", "is_trade"],
+    "sample": "random",
+    "num_domains": 4,
+    "mask_values": [0, 1, 2, 3],
+    "mask_column": "user_gender_id",
+    "scene_feature": "user_gender_id"
+  },
+  "model_config": {
+    "task_name": "msl",
+    "model_name": "snr_trans",
+    "task": "binary",
+    "task_names": ["ctr", "ctr", "ctr", "ctr"],
+    "task_types":["binary", "binary", "binary", "binary"],
+    "emb": 8,
+    "num_experts": 4,
+    "shared_expert_num": 2,
+    "specific_expert_num": 3,
+    "num_levels": 2,
+    "expert_dnn_hidden_units": [256, 128],
+    "dnn_hidden_units":[256, 128, 64],
+    "bottom_dnn_hidden_units": [256, 128],
+    "gate_dnn_hidden_units": [64],
+    "tower_dnn_hidden_units": [64],
+    "l2_reg_linear": 0,
+    "l2_reg_embedding": 0,
+    "l2_reg_dnn": 0,
+    "dnn_use_bn": false,
+    "dnn_dropout": 0.0,
+    "dnn_activation": "relu",
+    "use_cka_loss": false,
+    "loss_weights": [2, 1, 1, 2]
+
+  },
+  "optim_config": {
+    "lr": 0.005,
+    "optimizer": "adam",
+    "loss": ["binary_crossentropy", "binary_crossentropy", "binary_crossentropy", "binary_crossentropy"],
+    "metrics":["auc", "acc"],
+    "weight_decay": 1e-05,
+    "decay_step": 5,
+    "gamma": 0.5,
+    "early_stop": 3
+  },
+  "training_config": {
+    "train_batch_size": 4096,
+    "val_batch_size": 4096,
+    "test_batch_size": 4096,
+    "epochs": 40,
+    "max_steps": 100000
+  },
+  "save_config": {
+    "save": true,
+    "save_path": "./checkpoint/",
+    "save_layer_output": false
+  }
+}
