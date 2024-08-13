@@ -1,0 +1,60 @@
+{
+  "data_config": {
+    "data_name": "amazon",
+    "train_dataset_path": "/MMLRec/data/amazon_train.csv",
+    "test_dataset_path": "/MMLRec/data/amazon_test.csv",
+    "test_result_path": "/MMLRec/results/amazon_test_result.csv",
+    "layer_output_path": "/MMLRec/results/amazon_layer_output",
+    "all_columns": ["verified", "month", "year", "reviewer_id", "asin_id", "vote", "style", "category", "label", "label2"],
+    "feature_columns": ["verified", "month", "year", "reviewer_id", "asin_id", "vote", "style"],
+    "dense_columns": [],
+    "ignore_columns": [],
+    "label_columns": ["label", "label2"],
+    "sample": "random"
+  },
+  "model_config": {
+    "task_name": "mtl",
+    "model_name": "sharedbottom",
+    "task": "binary",
+    "emb": 8,
+    "num_experts": 4,
+    "shared_expert_num": 2,
+    "specific_expert_num": 3,
+    "num_levels": 2,
+    "expert_dnn_hidden_units": [128, 128],
+    "dnn_hidden_units":[128, 128],
+    "bottom_dnn_hidden_units": [128, 128],
+    "gate_dnn_hidden_units": [128],
+    "tower_dnn_hidden_units": [],
+    "l2_reg_linear": 0,
+    "l2_reg_embedding": 0,
+    "l2_reg_dnn": 0,
+    "dnn_use_bn": false,
+    "dnn_dropout": 0.0,
+    "dnn_activation": "relu",
+    "use_cka_loss": false
+
+  },
+  "optim_config": {
+    "lr": 0.001,
+    "optimizer": "adam",
+    "loss": ["binary_crossentropy", "binary_crossentropy"],
+    "metrics":["auc", "acc"],
+    "weight_decay": 1e-05,
+    "decay_step": 5,
+    "gamma": 0.5,
+    "early_stop": 3
+  },
+  "training_config": {
+    "train_batch_size": 4096,
+    "val_batch_size": 4096,
+    "test_batch_size": 4096,
+    "epochs": 40,
+    "max_steps": 100000
+  },
+  "save_config": {
+    "save": true,
+    "save_path": "./checkpoint/",
+    "save_layer_output": false
+  }
+}

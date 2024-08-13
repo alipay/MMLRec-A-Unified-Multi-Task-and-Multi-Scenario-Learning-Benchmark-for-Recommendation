@@ -1,0 +1,78 @@
+{
+  "data_config": {
+    "data_name": "ae",
+    "train_dataset_path": "/MMLRec/data/ae_train.csv",
+    "test_dataset_path": "/MMLRec/data/ae_test.csv",
+    "test_result_path": "/MMLRec/results/ae_test_result.csv",
+    "layer_output_path": "/MMLRec/results/ae_layer_output",
+    "all_columns": ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "n1",
+                "n2", "n3", "n4", "n5", "n6", "n7", "n8", "n9", "n10", "n11",
+               "n12", "n13", "n14", "n15", "n16", "n17", "n18", "n19", "n20", "n21",
+               "n22", "n23", "c8", "c9", "in1", "in2", "in3", "in4", "in5", "in6", "in7", "in8", "in9", "in10", 
+                "in11", "in12", "in13", "in14", "in15", "in16", "in17", "iin18", "in19", "in20", 
+                "in21", "in22", "in23", "in24", "in25", "in26", "in27", "in28", "in29", "in30",
+                "in31", "in32", "iin33", "iin34", "iin35", "in36", "in37", "in38", "iin39", "iin40", 
+               "iin41", "in42", "in43", "in44", "in45", "in46", "in47", "scene", "label"],
+    "feature_columns": ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "iin18",
+                        "iin33", "iin34", "iin35", "iin39", "iin40",  "iin41"],
+    "dense_columns": ["n1", "n2", "n3", "n4", "n5", "n6", "n7", "n8", "n9", "n10", "n11",
+               "n12", "n13", "n14", "n15", "n16", "n17", "n18", "n19", "n20", "n21",
+               "n22", "n23", "in1", "in2", "in3", "in4", "in5", "in6", "in7", "in8", "in9", "in10", 
+                "in11", "in12", "in13", "in14", "in15", "in16", "in17", "in19", "in20", 
+                "in21", "in22", "in23", "in24", "in25", "in26", "in27", "in28", "in29", "in30",
+                "in31", "in32", "in36", "in37", "in38", "in42", "in43", "in44", "in45", "in46", "in47"],
+    "ignore_columns": [],
+    "label_columns": ["label", "label"],
+    "sample": "random",
+    "num_domains": 2,
+    "mask_values": [0, 1],
+    "mask_column": "scene",
+    "scene_feature": "scene"
+  },
+  "model_config": {
+    "task_name": "msl",
+    "model_name": "sharedbottom",
+    "task": "binary",
+    "emb": 8,
+    "num_experts": 4,
+    "shared_expert_num": 2,
+    "specific_expert_num": 3,
+    "num_levels": 2,
+    "expert_dnn_hidden_units": [256, 128],
+    "dnn_hidden_units":[256, 128, 64],
+    "bottom_dnn_hidden_units": [256, 128],
+    "gate_dnn_hidden_units": [64],
+    "tower_dnn_hidden_units": [64],
+    "l2_reg_linear": 0,
+    "l2_reg_embedding": 0,
+    "l2_reg_dnn": 0,
+    "dnn_use_bn": false,
+    "dnn_dropout": 0.0,
+    "dnn_activation": "relu",
+    "use_cka_loss": false,
+    "loss_weights": [1, 2]
+
+  },
+  "optim_config": {
+    "lr": 0.005,
+    "optimizer": "adam",
+    "loss": ["binary_crossentropy", "binary_crossentropy"],
+    "metrics":["auc", "acc"],
+    "weight_decay": 1e-05,
+    "decay_step": 5,
+    "gamma": 0.5,
+    "early_stop": 3
+  },
+  "training_config": {
+    "train_batch_size": 4096,
+    "val_batch_size": 4096,
+    "test_batch_size": 4096,
+    "epochs": 40,
+    "max_steps": 100000
+  },
+  "save_config": {
+    "save": true,
+    "save_path": "./checkpoint/",
+    "save_layer_output": false
+  }
+}
